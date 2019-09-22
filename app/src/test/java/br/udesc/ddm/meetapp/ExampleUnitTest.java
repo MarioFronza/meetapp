@@ -1,4 +1,4 @@
-package br.udesc.aula1.meetapp;
+package br.udesc.ddm.meetapp;
 
 import org.junit.Test;
 

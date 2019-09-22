@@ -5,88 +5,8 @@
     android:id="@+id/signup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.SignupActivity">
-
-    <Button
-        android:id="@+id/signupButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:background="@color/colorAccent"
-        android:text="Criar conta"
-        android:textColor="#FFF"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/sigupTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupEditTextPass" />
-    />
-
-    <EditText
-        android:id="@+id/signupEditTextName"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="@android:dimen/notification_large_icon_width"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="27dp"
-        android:ems="10"
-        android:hint="Nome completo"
-        android:inputType="textPersonName"
-        android:textColor="#FFF"
-        android:textColorHint="#99FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/signupEditTextEmail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sigupImageView" />
-
-
-    <EditText
-        android:id="@+id/signupEditTextPass"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:ems="10"
-        android:hint="Sua senha secreta"
-        android:inputType="textEmailAddress"
-        android:textColor="#FFF"
-        android:textColorHint="#99FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/signupButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupEditTextEmail" />
-
-
-    <EditText
-        android:id="@+id/signupEditTextEmail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:ems="10"
-        android:hint="Digite seu e-mail"
-        android:inputType="textPassword"
-        android:textColor="#FFF"
-        android:textColorHint="#99FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/signupEditTextPass"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupEditTextName" />
+    tools:context=".view.activity.SignupActivity"
+    tools:ignore="ExtraText">
 
     <ImageView
         android:id="@+id/sigupImageView"
@@ -99,6 +19,94 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
+
+    <Button
+        android:id="@+id/signupButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/background_button"
+        android:text="@string/create_account"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/sigupTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signupEditTextPass" />
+
+
+    <EditText
+        android:id="@+id/signupEditTextName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="@android:dimen/notification_large_icon_width"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="27dp"
+        android:background="@drawable/background_edittext"
+        android:ems="10"
+        android:hint="@string/text_name"
+        android:inputType="textPersonName"
+        android:padding="15dp"
+        android:textColor="#FFF"
+        android:textColorHint="#99FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/signupEditTextEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sigupImageView" />
+
+    <EditText
+        android:id="@+id/signupEditTextEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/background_edittext"
+        android:ems="10"
+        android:hint="@string/text_email"
+        android:inputType="textPassword"
+        android:padding="15dp"
+        android:textColor="#FFF"
+        android:textColorHint="#99FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/signupEditTextPass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signupEditTextName"
+        tools:ignore="TextFields" />
+
+
+    <EditText
+        android:id="@+id/signupEditTextPass"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/background_edittext"
+        android:ems="10"
+        android:hint="@string/text_password"
+        android:inputType="textPassword"
+        android:padding="15dp"
+        android:textColor="#FFF"
+        android:textColorHint="#99FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/signupButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signupEditTextEmail" />
+
     <TextView
         android:id="@+id/sigupTextView"
         android:layout_width="wrap_content"
@@ -108,7 +116,8 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
-        android:text="Já tenho login"
+        android:onClick="goToLogin"
+        android:text="@string/already_login"
         android:textColor="#99FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -118,5 +127,6 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signupButton" />
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
