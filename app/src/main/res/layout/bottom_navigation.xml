@@ -8,6 +8,6 @@
     android:layout_alignParentBottom="true"
     android:background="@color/colorSecondary"
     app:itemIconTint="@android:color/darker_gray"
-    app:itemTextColor="@android:color/white"
+    app:itemTextColor="@android:color/darker_gray"
     app:menu="@menu/menu_bottom_navigation"
     xmlns:android="http://schemas.android.com/apk/res/android" />
