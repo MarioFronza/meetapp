@@ -3,11 +3,13 @@
     <string name="text_name">Nome completo</string>
     <string name="text_email">Digite seu e-mail</string>
     <string name="text_password">Sua senha secreta</string>
+    <string name="current_password">Senha atual</string>
+    <string name="new_password">Nova senha</string>
+    <string name="confirm_password">Confirmação de senha</string>
     <string name="create_account">Criar conta</string>
     <string name="create_new_account">Criar conta grátis</string>
     <string name="login">Entrar</string>
     <string name="already_login">Já tenho login</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="save_profile">Salvar perfil</string>
+    <string name="exit_app">Sair do Meetapp</string>
 </resources>
