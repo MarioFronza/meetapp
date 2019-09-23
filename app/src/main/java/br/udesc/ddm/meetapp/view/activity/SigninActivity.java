@@ -12,13 +12,19 @@ import br.udesc.ddm.meetapp.R;
 public class SigninActivity extends AppCompatActivity {
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+
     }
 
     public void goToCreateAccount(View view){
         startActivity(new Intent(SigninActivity.this, SignupActivity.class));
+    }
+
+    public void siginIn(View view){
+        startActivity(new Intent(SigninActivity.this, MainActivity.class));
     }
 }

@@ -11,5 +11,10 @@
     <string name="login">Entrar</string>
     <string name="already_login">Já tenho login</string>
     <string name="save_profile">Salvar perfil</string>
+    <string name="save_meetup">Salvar meetup</string>
     <string name="exit_app">Sair do Meetapp</string>
+    <string name="text_title">Título</string>
+    <string name="text_description">Descrição</string>
+    <string name="text_location">Localização</string>
+    <string name="text_date">Data/Hora</string>
 </resources>
