@@ -17,4 +17,7 @@
     <string name="text_description">Descrição</string>
     <string name="text_location">Localização</string>
     <string name="text_date">Data/Hora</string>
+    <string name="text_meetup_registration">Realizar inscrição</string>
+    <string name="text_cancel_meetup_registration">Cancelar inscrição</string>
+    <string name="select_date">Selecione uma data</string>
 </resources>

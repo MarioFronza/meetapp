@@ -1,17 +1,32 @@
 package br.udesc.ddm.meetapp.view.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import br.udesc.ddm.meetapp.R;
+import br.udesc.ddm.meetapp.model.Meetup;
+import br.udesc.ddm.meetapp.view.activity.DetailsActivity;
+import br.udesc.ddm.meetapp.view.activity.SigninActivity;
+import br.udesc.ddm.meetapp.view.fragment.MeetupsFragment;
 
 public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MyViewHolder> {
+
+    private List<Meetup> meetups;
+
+    public MeetupAdapter(List<Meetup> meetups) {
+        this.meetups = meetups;
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
@@ -19,6 +34,9 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MyViewHold
         private TextView date;
         private TextView user;
         private ImageView image;
+        private Button button;
+        public View view;
+        public Meetup currentMeetup;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -27,6 +45,14 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MyViewHold
             date = itemView.findViewById(R.id.textViewDate);
             user = itemView.findViewById(R.id.textViewUser);
             image = itemView.findViewById(R.id.imageMeetup);
+            button = itemView.findViewById(R.id.btnMeetupItem);
+            view = itemView;
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    v.getContext().startActivity(new Intent(v.getContext(), DetailsActivity.class));
+                }
+            });
         }
     }
 
@@ -40,16 +66,20 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.title.setText("Meetup de React Native");
-        holder.location.setText("Rua Dr. Getúlio Vargas, 2000");
-        holder.date.setText("02 de Setembro, às 20h");
-        holder.user.setText("Organizador: João Pedro Schmitz");
-        holder.image.setImageResource(R.drawable.meetup);
+        holder.currentMeetup = meetups.get(position);
+        Meetup meetup = meetups.get(position);
+        holder.title.setText(meetup.getTitle());
+        holder.location.setText(meetup.getLocation());
+        holder.date.setText(meetup.getDate());
+        holder.user.setText(meetup.getUser());
+        holder.image.setImageResource(meetup.getImage());
+        holder.button.setText(R.string.text_meetup_registration);
+
     }
 
     @Override
     public int getItemCount() {
-        return 6;
+        return meetups.size();
     }
 
 

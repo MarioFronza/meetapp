@@ -7,9 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
-    android:layout_margin="10dp"
-    card_view:cardElevation="10dp"
-    app:cardCornerRadius="5dp">
+    android:layout_marginTop="10dp"
+    app:cardCornerRadius="5dp"
+    card_view:cardElevation="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,18 +20,16 @@
         <ImageView
             android:id="@+id/imageMeetup"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:src="@drawable/meetup"
-            android:scaleType="centerCrop"/>
-
+            android:layout_height="200dp"
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginRight="24dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
             android:text="Meetup de React Native"
             android:textColor="#000333"
             android:textSize="18sp"
@@ -41,9 +39,9 @@
             android:id="@+id/textViewDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="24dp"
+            android:layout_marginRight="16dp"
             android:text="02 de Setembro, às 20h"
             android:textColor="#999999" />
 
@@ -51,9 +49,9 @@
             android:id="@+id/textViewLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="24dp"
+            android:layout_marginRight="16dp"
             android:text="Rua Dr. Getúlio Vargas, 2000"
             android:textColor="#999999" />
 
@@ -61,20 +59,20 @@
             android:id="@+id/textViewUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="24dp"
+            android:layout_marginRight="16dp"
             android:text="Organizador: João Pedro Schmitz"
             android:textColor="#999999" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnMeetupItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/background_button"
             android:text="Realizar inscrição"
             android:textColor="#FFFFFF" />
