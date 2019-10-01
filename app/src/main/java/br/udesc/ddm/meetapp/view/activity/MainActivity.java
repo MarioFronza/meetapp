@@ -6,8 +6,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
@@ -21,6 +27,8 @@ import br.udesc.ddm.meetapp.view.fragment.ProfileFragment;
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationViewEx bottomNavigationViewEx;
+    private SharedPreferences preferences;
+    private ImageView imageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +38,20 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationConfig();
         setFirstFragment();
         enableNavigation(bottomNavigationViewEx);
+
+        Toolbar toolbar = findViewById(R.id.mainToolbar);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+
+        preferences = getSharedPreferences("meetappPreferences", MODE_PRIVATE);
+
+        imageButton = toolbar.findViewById(R.id.mainLogo);
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 
     public void bottomNavigationConfig() {
@@ -72,5 +94,14 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        String token = preferences.getString("token", "");
+        if (token.equals("")) {
+            startActivity(new Intent(MainActivity.this, SigninActivity.class));
+        }
     }
 }

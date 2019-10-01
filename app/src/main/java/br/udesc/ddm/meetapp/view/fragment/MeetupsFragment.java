@@ -1,8 +1,6 @@
 package br.udesc.ddm.meetapp.view.fragment;
 
 import android.app.DatePickerDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,7 +65,7 @@ public class MeetupsFragment extends Fragment implements DatePickerDialog.OnDate
 
     private void setCurrentDate() {
         String date = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "/" + Calendar.getInstance().get(Calendar.MONTH) + "/" + Calendar.getInstance().get(Calendar.YEAR);
-        buttonDate.setText(date);
+        buttonDate.setText("Selecionar data");
 
     }
 

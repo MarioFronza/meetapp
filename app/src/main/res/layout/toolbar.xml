@@ -14,11 +14,12 @@
         android:minHeight="?attr/actionBarSize"
         app:theme="@style/ToolbarColoredBackArrow"
         app:subtitleTextColor="@android:color/white"
+        app:layout_scrollFlags="scroll|enterAlways"
         app:titleTextColor="@android:color/white">
 
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/mainLogo"
             android:layout_width="23dp"
             android:layout_height="24dp"
             android:layout_gravity="center"

@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.activity.DetailsActivity" android:parentActivityName=".view.activity.MainActivity"></activity>
+        <activity
+            android:name=".view.activity.DetailsActivity"
+            android:parentActivityName=".view.activity.MainActivity"
+            tools:targetApi="jelly_bean" />
         <activity android:name=".view.activity.SignupActivity" />
         <activity android:name=".view.activity.SigninActivity" />
         <activity android:name=".view.activity.MainActivity">
