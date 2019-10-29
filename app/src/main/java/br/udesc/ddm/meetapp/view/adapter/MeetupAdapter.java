@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,8 +16,6 @@ import java.util.List;
 import br.udesc.ddm.meetapp.R;
 import br.udesc.ddm.meetapp.model.Meetup;
 import br.udesc.ddm.meetapp.view.activity.DetailsActivity;
-import br.udesc.ddm.meetapp.view.activity.SigninActivity;
-import br.udesc.ddm.meetapp.view.fragment.MeetupsFragment;
 
 public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MyViewHolder> {
 
@@ -71,8 +68,7 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MyViewHold
         holder.title.setText(meetup.getTitle());
         holder.location.setText(meetup.getLocation());
         holder.date.setText(meetup.getDate());
-        holder.user.setText(meetup.getUser());
-        holder.image.setImageResource(meetup.getImage());
+        holder.user.setText("Mario");
         holder.button.setText(R.string.text_meetup_registration);
 
     }

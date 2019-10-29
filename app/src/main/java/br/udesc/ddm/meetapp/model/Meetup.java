@@ -1,22 +1,30 @@
 package br.udesc.ddm.meetapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Meetup {
 
+    private int id;
+    private String description;
     private String title;
     private String location;
     private String date;
-    private String user;
-    private int image;
 
-    public Meetup() {
-    }
-
-    public Meetup(String title, String location, String date, String user, int image) {
+    public Meetup(int id, String title, String location, String date) {
+        this.id = id;
         this.title = title;
         this.location = location;
         this.date = date;
-        this.user = user;
-        this.image = image;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -43,19 +51,13 @@ public class Meetup {
         this.date = date;
     }
 
-    public String getUser() {
-        return user;
+    public String getDescription() {
+        return description;
     }
 
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
+
+

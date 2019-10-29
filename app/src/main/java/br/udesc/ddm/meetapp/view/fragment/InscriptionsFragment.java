@@ -29,17 +29,14 @@ public class InscriptionsFragment extends Fragment {
     private List<Meetup> inscriptions;
 
 
-    public InscriptionsFragment() {
-        this.inscriptions = new ArrayList<>();
-        setInscriptionsList();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_inscriptions, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerInscriptions);
+
+        inscriptions = new ArrayList<>();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(new InscriptionAdapter(inscriptions));
@@ -48,9 +45,6 @@ public class InscriptionsFragment extends Fragment {
         return view;
     }
 
-    private void setInscriptionsList() {
-        Meetup meetup = new Meetup("Meetup React Native", "Rua Dr. Getúlio Vargas, 2000", "02 de Setembro, às 20h", "Organizador: João Pedro Schmitz", R.drawable.meetup);
-        this.inscriptions.add(meetup);
-    }
+
 
 }

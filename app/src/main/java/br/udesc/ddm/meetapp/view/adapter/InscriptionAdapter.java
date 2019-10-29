@@ -57,8 +57,7 @@ public class InscriptionAdapter extends RecyclerView.Adapter<InscriptionAdapter.
         holder.title.setText(meetup.getTitle());
         holder.location.setText(meetup.getLocation());
         holder.date.setText(meetup.getDate());
-        holder.user.setText(meetup.getUser());
-        holder.image.setImageResource(meetup.getImage());
+        holder.user.setText("");
         holder.button.setText(R.string.text_cancel_meetup_registration);
     }
 

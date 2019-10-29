@@ -30,10 +30,6 @@ public class SigninActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private Button signinButton;
     private ProgressBar progressBar;
-
-    private Call<Session> call;
-    private Session session;
-
     private SharedPreferences preferences;
 
     @Override
@@ -53,12 +49,12 @@ public class SigninActivity extends AppCompatActivity {
     public void siginIn(View view) {
         visibilityProgressSigin(true);
 
-        session = new Session(
+        Session session = new Session(
                 editTextEmail.getText().toString(),
                 editTextPassword.getText().toString()
         );
 
-        call = new RetrofitInitializer().getSessionService().signIn(session);
+        Call<Session> call = new RetrofitInitializer().getSessionService().signIn(session);
         call.enqueue(new Callback<Session>() {
             @Override
             public void onResponse(Call<Session> call, Response<Session> response) {
