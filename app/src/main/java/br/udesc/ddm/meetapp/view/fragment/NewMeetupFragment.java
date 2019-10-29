@@ -1,17 +1,17 @@
 package br.udesc.ddm.meetapp.view.fragment;
 
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,10 +39,8 @@ import java.util.Date;
 
 import br.udesc.ddm.meetapp.R;
 import br.udesc.ddm.meetapp.model.Image;
-import br.udesc.ddm.meetapp.model.Meetup;
-import br.udesc.ddm.meetapp.model.User;
 import br.udesc.ddm.meetapp.retrofit.RetrofitInitializer;
-import br.udesc.ddm.meetapp.view.activity.SignupActivity;
+import br.udesc.ddm.meetapp.view.activity.SigninActivity;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -52,9 +51,7 @@ import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     private SharedPreferences preferences;
@@ -63,16 +60,14 @@ public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDa
     private EditText editTextDescription;
     private EditText editTextLocation;
     private TextView textViewDate;
-
     private Button selectImageButton;
     private Button saveMeetupButton;
+    private ProgressBar newMeetupProgressBar;
 
-    private Bitmap bitmap;
     private File file = null;
-    private String strDate;
-    private String token;
 
-    private int imageId = 0;
+    private String selectedDate;
+    private String token;
 
     private static final int IMAGE_REQUEST = 777;
 
@@ -88,7 +83,7 @@ public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDa
         editTextDescription = view.findViewById(R.id.newMeetupEditTextDescription);
         editTextLocation = view.findViewById(R.id.newMeetupEditTextLocation);
         textViewDate = view.findViewById(R.id.newMeetupTextViewDate);
-
+        newMeetupProgressBar = view.findViewById(R.id.newMeetupProgressBar);
         selectImageButton = view.findViewById(R.id.selectImageButton);
         saveMeetupButton = view.findViewById(R.id.saveMeetupButton);
 
@@ -98,7 +93,6 @@ public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDa
                 showDatePickerDialog();
             }
         });
-
 
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,76 +112,89 @@ public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDa
                     RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName() + ".jpeg", requestFile);
 
-
                     Call<Image> call = new RetrofitInitializer().getFileService().createFile("Bearer " + token, body);
+                    visibilityProgress(true);
                     call.enqueue(new Callback<Image>() {
                         @Override
                         public void onResponse(Call<Image> call, Response<Image> response) {
                             if (response.isSuccessful()) {
                                 Image image = response.body();
-                                imageId = image.getId();
+                                createMeetup(image.getId());
                             } else {
-                                Toast.makeText(getActivity(), "Erro na requisição", Toast.LENGTH_LONG).show();
+                                visibilityProgress(false);
                             }
                         }
 
                         @Override
                         public void onFailure(Call<Image> call, Throwable t) {
-                            Toast.makeText(getActivity(), t.toString(), Toast.LENGTH_LONG).show();
                             t.printStackTrace();
+                            visibilityProgress(false);
                         }
                     });
-
-                }
-
-                if (imageId != 0) {
-                    String title = editTextTitle.getText().toString();
-                    String description = editTextDescription.getText().toString();
-                    String location = editTextLocation.getText().toString();
-                    String date = strDate;
-                    JSONObject json = new JSONObject();
-                    try {
-                        json.put("title", title);
-                        json.put("description", description);
-                        json.put("location", location);
-                        json.put("date", date);
-                        json.put("file_id", imageId);
-                        Toast.makeText(getActivity(), json.toString(), Toast.LENGTH_LONG).show();
-                        RequestBody meetupBody = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), json.toString());
-                        Call<ResponseBody> meetupCall = new RetrofitInitializer().getMeetupService().createMeetup("Bearer " + token, meetupBody);
-                        meetupCall.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                if (response.isSuccessful()) {
-                                    Toast.makeText(getActivity(), "Sucesso ao cadastrar Meetup", Toast.LENGTH_LONG).show();
-                                } else {
-                                    JSONObject jObjError;
-                                    try {
-                                        jObjError = new JSONObject(response.errorBody().string());
-                                        Toast.makeText(getActivity(), jObjError.getString("error"), Toast.LENGTH_LONG).show();
-                                    } catch (JSONException | IOException e) {
-                                        Toast.makeText(getActivity(), "Erro na requisição", Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                Toast.makeText(getActivity(), "Erro na requisição", Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Toast.makeText(getActivity(), "Selecione uma imagem para o Meetup", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
         return view;
     }
 
+    private void createMeetup(int imageId) {
+        String meetupData = mountMeetupJson(
+                editTextTitle.getText().toString(),
+                editTextDescription.getText().toString(),
+                editTextLocation.getText().toString(),
+                selectedDate,
+                imageId
+        );
+        RequestBody meetupBody = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), meetupData);
+        Call<ResponseBody> meetupCall = new RetrofitInitializer().getMeetupService().createMeetup("Bearer " + token, meetupBody);
+        meetupCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getActivity(), "Sucesso ao cadastrar Meetup", Toast.LENGTH_LONG).show();
+                    clearAllFields();
+                } else {
+                    JSONObject jObjError;
+                    try {
+                        jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getActivity(), jObjError.getString("error"), Toast.LENGTH_LONG).show();
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getActivity(), "Erro na requisição", Toast.LENGTH_LONG).show();
+            }
+        });
+        visibilityProgress(false);
+
+    }
+
+    private void clearAllFields() {
+        editTextTitle.getText().clear();
+        editTextDescription.getText().clear();
+        editTextLocation.getText().clear();
+        textViewDate.setText("");
+        selectImageButton.setText(R.string.select_image);
+
+    }
+
+    private String mountMeetupJson(String title, String description, String location, String date, int imageId) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("title", title);
+            json.put("description", description);
+            json.put("location", location);
+            json.put("date", date);
+            json.put("file_id", imageId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -198,7 +205,7 @@ public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDa
             file = new File(getActivity().getCacheDir(), "meetup-image");
             try {
                 file.createNewFile();
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
                 ByteArrayOutputStream bos = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
                 byte[] bitmapdata = bos.toByteArray();
@@ -220,7 +227,6 @@ public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDa
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             selectImageButton.setText(R.string.change_image);
         }
     }
@@ -250,9 +256,17 @@ public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDa
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
-        strDate = date.toString();
+        selectedDate = date.toString();
         textViewDate.setText(formatedDatePicker);
+    }
+
+    private void visibilityProgress(boolean show) {
+        if (show) {
+            newMeetupProgressBar.setVisibility(View.VISIBLE);
+            saveMeetupButton.setVisibility(View.INVISIBLE);
+        } else {
+            newMeetupProgressBar.setVisibility(View.INVISIBLE);
+            saveMeetupButton.setVisibility(View.VISIBLE);
+        }
     }
 }

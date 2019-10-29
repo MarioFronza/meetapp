@@ -21,7 +21,7 @@
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
             android:background="@drawable/button_bg_dashed_border"
-            android:text="selecionar imagem"
+            android:text="@string/select_image"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/newMeetupEditTextLocation"
             app:layout_constraintEnd_toEndOf="parent"
@@ -152,6 +152,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/selectImageButton"
             tools:ignore="MissingConstraints" />
+
+        <ProgressBar
+            android:id="@+id/newMeetupProgressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/saveMeetupButton"
+            app:layout_constraintEnd_toEndOf="@+id/saveMeetupButton"
+            app:layout_constraintStart_toStartOf="@+id/saveMeetupButton"
+            app:layout_constraintTop_toTopOf="@+id/saveMeetupButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
