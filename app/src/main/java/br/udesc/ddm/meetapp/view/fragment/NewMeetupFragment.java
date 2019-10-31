@@ -10,8 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -40,7 +38,6 @@ import java.util.Date;
 import br.udesc.ddm.meetapp.R;
 import br.udesc.ddm.meetapp.model.Image;
 import br.udesc.ddm.meetapp.retrofit.RetrofitInitializer;
-import br.udesc.ddm.meetapp.view.activity.SigninActivity;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -121,6 +118,11 @@ public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDa
                                 Image image = response.body();
                                 createMeetup(image.getId());
                             } else {
+                                try {
+                                    toastErrorMessage(response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                                 visibilityProgress(false);
                             }
                         }
@@ -137,6 +139,16 @@ public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDa
         return view;
     }
 
+    private void toastErrorMessage(String error){
+        JSONObject jObjError;
+        try {
+            jObjError = new JSONObject(error);
+            Toast.makeText(getActivity(), jObjError.getString("error"), Toast.LENGTH_LONG).show();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void createMeetup(int imageId) {
         String meetupData = mountMeetupJson(
                 editTextTitle.getText().toString(),
@@ -151,14 +163,12 @@ public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDa
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getActivity(), "Sucesso ao cadastrar Meetup", Toast.LENGTH_LONG).show();
                     clearAllFields();
+                    Toast.makeText(getActivity(), "Sucesso ao cadastrar Meetup", Toast.LENGTH_LONG).show();
                 } else {
-                    JSONObject jObjError;
                     try {
-                        jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(getActivity(), jObjError.getString("error"), Toast.LENGTH_LONG).show();
-                    } catch (JSONException | IOException e) {
+                        toastErrorMessage(response.errorBody().string());
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
@@ -179,7 +189,6 @@ public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDa
         editTextLocation.getText().clear();
         textViewDate.setText("");
         selectImageButton.setText(R.string.select_image);
-
     }
 
     private String mountMeetupJson(String title, String description, String location, String date, int imageId) {

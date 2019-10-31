@@ -25,6 +25,7 @@ import java.util.List;
 
 import br.udesc.ddm.meetapp.R;
 import br.udesc.ddm.meetapp.model.Meetup;
+import br.udesc.ddm.meetapp.model.MeetupResponse;
 import br.udesc.ddm.meetapp.retrofit.RetrofitInitializer;
 import br.udesc.ddm.meetapp.view.adapter.MeetupAdapter;
 import okhttp3.ResponseBody;
@@ -75,12 +76,13 @@ public class MeetupsFragment extends Fragment implements DatePickerDialog.OnDate
     private void requestsAllMeetups() {
         preferences = this.getActivity().getSharedPreferences("meetappPreferences", MODE_PRIVATE);
         String token = preferences.getString("token", "");
-        Call<ResponseBody> call = new RetrofitInitializer().getMeetupService().getMeetups("Bearer " + token);
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<MeetupResponse> call = new RetrofitInitializer().getMeetupService().getMeetups("Bearer " + token);
+        call.enqueue(new Callback<MeetupResponse>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<MeetupResponse> call, Response<MeetupResponse> response) {
                 if (response.isSuccessful()) {
-//                    List<Meetup> meetupsList = (List<Meetup>) response.body();
+                    MeetupResponse meetup = response.body();
+                    Toast.makeText(getActivity(), meetup.toString(), Toast.LENGTH_LONG).show();
                 } else {
                     JSONObject jObjError;
                     try {
@@ -93,7 +95,7 @@ public class MeetupsFragment extends Fragment implements DatePickerDialog.OnDate
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<MeetupResponse> call, Throwable t) {
                 Toast.makeText(getActivity(), "Erro na requisição", Toast.LENGTH_LONG).show();
                 t.printStackTrace();
             }

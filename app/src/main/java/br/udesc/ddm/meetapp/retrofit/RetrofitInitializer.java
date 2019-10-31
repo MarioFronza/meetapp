@@ -11,7 +11,7 @@ public class RetrofitInitializer {
     private final Retrofit retrofit;
 
     public RetrofitInitializer() {
-        retrofit = new Retrofit.Builder().baseUrl("http://10.15.69.8:3333")
+        retrofit = new Retrofit.Builder().baseUrl("https://ddm-meetapp-server.herokuapp.com")
                 .addConverterFactory(JacksonConverterFactory.create()).build();
     }
 

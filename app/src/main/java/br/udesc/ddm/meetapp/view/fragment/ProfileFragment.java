@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -36,7 +37,7 @@ public class ProfileFragment extends Fragment {
 
     private Button signOutButton;
     private Button updateUserDataButton;
-
+    private ProgressBar profileProgressBar;
     private EditText editTextName;
     private EditText editTextEmail;
     private EditText editTextCurrentPassword;
@@ -57,7 +58,7 @@ public class ProfileFragment extends Fragment {
 
         signOutButton = view.findViewById(R.id.exitAppProfile);
         updateUserDataButton = view.findViewById(R.id.saveProfileButton);
-
+        profileProgressBar = view.findViewById(R.id.profileProgressBar);
         editTextName = view.findViewById(R.id.profileEditTextName);
         editTextEmail = view.findViewById(R.id.profileEditTextEmail);
         editTextCurrentPassword = view.findViewById(R.id.profileEditTextCurrentPass);
@@ -69,31 +70,25 @@ public class ProfileFragment extends Fragment {
         updateUserDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                visibilityProgress(true);
                 String token = preferences.getString("token", "");
-                String name = editTextName.getText().toString();
-                String email = editTextEmail.getText().toString();
-                String oldPassowrd = editTextCurrentPassword.getText().toString();
-                String password = editTextNewPassword.getText().toString();
-                String confirmPassword = editTextConfirmPassword.getText().toString();
-                JSONObject json = new JSONObject();
-                try {
-                    json.put("name", name);
-                    json.put("email", email);
-                    if (!oldPassowrd.equals("")) {
-                        json.put("oldPassowrd", oldPassowrd);
-                        json.put("password", password);
-                        json.put("confirmPassword", confirmPassword);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), json.toString());
-                Call<User> call = new RetrofitInitializer().getUserService().updateUser("Bearer " + token, body);
+
+                String userData = mountUserData(
+                        editTextName.getText().toString(),
+                        editTextEmail.getText().toString(),
+                        editTextCurrentPassword.getText().toString(),
+                        editTextNewPassword.getText().toString(),
+                        editTextConfirmPassword.getText().toString()
+                );
+
+                RequestBody userBody = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), userData);
+                Call<User> call = new RetrofitInitializer().getUserService().updateUser("Bearer " + token, userBody);
                 call.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(getActivity(), "Dados alterados com sucesso!", Toast.LENGTH_LONG).show();
+                            clearPasswordsFields();
                         } else {
                             JSONObject jObjError;
                             try {
@@ -110,6 +105,7 @@ public class ProfileFragment extends Fragment {
                         Toast.makeText(getActivity(), "Erro na requisição", Toast.LENGTH_LONG).show();
                     }
                 });
+                visibilityProgress(false);
             }
         });
 
@@ -122,6 +118,28 @@ public class ProfileFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private String mountUserData(String name, String email, String oldPassword, String password, String confirmPassword) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("name", name);
+            json.put("email", email);
+            if (!oldPassword.equals("")) {
+                json.put("oldPassword", oldPassword);
+                json.put("password", password);
+                json.put("confirmPassword", confirmPassword);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    private void clearPasswordsFields() {
+        editTextCurrentPassword.getText().clear();
+        editTextNewPassword.getText().clear();
+        editTextConfirmPassword.getText().clear();
     }
 
     private void requestUserData() {
@@ -150,6 +168,16 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+    }
+
+    private void visibilityProgress(boolean show) {
+        if (show) {
+            profileProgressBar.setVisibility(View.VISIBLE);
+            updateUserDataButton.setVisibility(View.INVISIBLE);
+        } else {
+            profileProgressBar.setVisibility(View.INVISIBLE);
+            updateUserDataButton.setVisibility(View.VISIBLE);
+        }
     }
 
 
