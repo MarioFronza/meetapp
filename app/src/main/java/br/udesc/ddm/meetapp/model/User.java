@@ -1,13 +1,18 @@
 package br.udesc.ddm.meetapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.gson.annotations.SerializedName;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
+    @SerializedName("id")
     private int id;
+    @SerializedName("name")
     private String name;
+    @SerializedName("email")
     private String email;
+    @SerializedName("password")
     private String password;
 
     public User() {

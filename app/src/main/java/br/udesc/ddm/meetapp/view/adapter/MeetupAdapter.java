@@ -15,6 +15,7 @@ import java.util.List;
 
 import br.udesc.ddm.meetapp.R;
 import br.udesc.ddm.meetapp.model.Meetup;
+import br.udesc.ddm.meetapp.util.DownloadImageTask;
 import br.udesc.ddm.meetapp.view.activity.DetailsActivity;
 
 public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MyViewHolder> {
@@ -68,7 +69,8 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MyViewHold
         holder.title.setText(meetup.getTitle());
         holder.location.setText(meetup.getLocation());
         holder.date.setText(meetup.getDate());
-        holder.user.setText("Mario");
+        holder.user.setText(meetup.getUser().getName());
+        new DownloadImageTask(holder.image).execute(meetups.get(position).getImage().getUrl());
         holder.button.setText(R.string.text_meetup_registration);
 
     }

@@ -3,7 +3,6 @@ package br.udesc.ddm.meetapp.service;
 import java.util.List;
 
 import br.udesc.ddm.meetapp.model.Meetup;
-import br.udesc.ddm.meetapp.model.MeetupResponse;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -18,7 +17,7 @@ import retrofit2.http.Path;
 public interface MeetupService {
 
     @GET("meetups/")
-    Call<MeetupResponse> getMeetups(@Header("Authorization") String authHeader);
+    Call<List<Meetup>> getMeetups(@Header("Authorization") String authHeader);
 
     @POST("meetups/")
     Call<ResponseBody> createMeetup(@Header("Authorization") String authHeader, @Body RequestBody meetup);

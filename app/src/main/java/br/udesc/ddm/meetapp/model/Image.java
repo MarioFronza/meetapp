@@ -1,12 +1,16 @@
 package br.udesc.ddm.meetapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.gson.annotations.SerializedName;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Image {
 
+    @SerializedName("id")
     private int id;
+    @SerializedName("url")
     private String url;
+    @SerializedName("path")
     private String path;
 
     public Image() {

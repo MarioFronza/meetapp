@@ -17,7 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import br.udesc.ddm.meetapp.R;
-import br.udesc.ddm.meetapp.view.fragment.InscriptionsFragment;
+import br.udesc.ddm.meetapp.view.fragment.SubscriptionsFragment;
 import br.udesc.ddm.meetapp.view.fragment.MeetupsFragment;
 import br.udesc.ddm.meetapp.view.fragment.NewMeetupFragment;
 import br.udesc.ddm.meetapp.view.fragment.ProfileFragment;
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                         fragmentTransaction.replace(R.id.viewPager, new MeetupsFragment()).commit();
                         return true;
                     case R.id.ic_inscriptions:
-                        fragmentTransaction.replace(R.id.viewPager, new InscriptionsFragment()).commit();
+                        fragmentTransaction.replace(R.id.viewPager, new SubscriptionsFragment()).commit();
                         return true;
                     case R.id.ic_new:
                         fragmentTransaction.replace(R.id.viewPager, new NewMeetupFragment()).commit();

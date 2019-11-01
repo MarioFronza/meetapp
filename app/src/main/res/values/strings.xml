@@ -22,4 +22,5 @@
     <string name="select_date">Selecione uma data</string>
     <string name="change_image">Alterar imagem</string>
     <string name="select_image">selecionar imagem</string>
+    <string name="no_subscriptions">Você não possui inscrições </string>
 </resources>

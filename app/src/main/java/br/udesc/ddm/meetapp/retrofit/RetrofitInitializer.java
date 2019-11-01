@@ -1,18 +1,19 @@
 package br.udesc.ddm.meetapp.retrofit;
 
 import br.udesc.ddm.meetapp.service.FileService;
+import br.udesc.ddm.meetapp.service.SubscriptionsService;
 import br.udesc.ddm.meetapp.service.MeetupService;
 import br.udesc.ddm.meetapp.service.SessionService;
 import br.udesc.ddm.meetapp.service.UserService;
 import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInitializer {
     private final Retrofit retrofit;
 
     public RetrofitInitializer() {
         retrofit = new Retrofit.Builder().baseUrl("https://ddm-meetapp-server.herokuapp.com")
-                .addConverterFactory(JacksonConverterFactory.create()).build();
+                .addConverterFactory(GsonConverterFactory.create()).build();
     }
 
     public UserService getUserService() {
@@ -29,6 +30,10 @@ public class RetrofitInitializer {
 
     public FileService getFileService() {
         return retrofit.create(FileService.class);
+    }
+
+    public SubscriptionsService getInscriptionService() {
+        return retrofit.create(SubscriptionsService.class);
     }
 
 }

@@ -1,6 +1,6 @@
 package br.udesc.ddm.meetapp.view.fragment;
 
-import android.app.DatePickerDialog;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -11,77 +11,62 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import br.udesc.ddm.meetapp.R;
 import br.udesc.ddm.meetapp.model.Meetup;
 import br.udesc.ddm.meetapp.retrofit.RetrofitInitializer;
-import br.udesc.ddm.meetapp.view.adapter.MeetupAdapter;
+import br.udesc.ddm.meetapp.view.adapter.InscriptionAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class SubscriptionsFragment extends Fragment {
 
-public class MeetupsFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
-
-    private RecyclerView recyclerView;
-    private FrameLayout progressBarHolder;
     private SharedPreferences preferences;
-    private Button buttonDate;
-    private List<Meetup> meetups;
+    private FrameLayout progressBarHolder;
+    private TextView subscriptionTextView;
+    private RecyclerView recyclerView;
+    private List<Meetup> inscriptions;
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_meetups, container, false);
+        View view = inflater.inflate(R.layout.fragment_subscriptions, container, false);
 
-        recyclerView = view.findViewById(R.id.recyclerMeetups);
-        progressBarHolder = view.findViewById(R.id.progressBarHolder);
-        buttonDate = view.findViewById(R.id.buttonDate);
+        progressBarHolder = view.findViewById(R.id.subcriptionProgressBarHolder);
+        recyclerView = view.findViewById(R.id.recyclerInscriptions);
+        subscriptionTextView = view.findViewById(R.id.subscriptionTextView);
         showProgressBar(true);
 
-        buttonDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-            }
-        });
-
-        requestsAllMeetups();
-        setCurrentDate();
-
+        requestAllInscriptions();
         return view;
     }
 
-    private void requestsAllMeetups() {
+    private void requestAllInscriptions() {
         preferences = this.getActivity().getSharedPreferences("meetappPreferences", MODE_PRIVATE);
         String token = preferences.getString("token", "");
-        Call<List<Meetup>> call = new RetrofitInitializer().getMeetupService().getMeetups("Bearer " + token);
+        Call<List<Meetup>> call = new RetrofitInitializer().getInscriptionService().getSubscriptions("Bearer " + token);
+
         call.enqueue(new Callback<List<Meetup>>() {
             @Override
             public void onResponse(Call<List<Meetup>> call, Response<List<Meetup>> response) {
                 if (response.isSuccessful()) {
-                    meetups = response.body();
+                    inscriptions = response.body();
                     setRecyclerViewData();
                     showProgressBar(false);
                 } else {
@@ -112,45 +97,27 @@ public class MeetupsFragment extends Fragment implements DatePickerDialog.OnDate
         }
     }
 
-    private void showProgressBar(boolean show){
-        if(show){
+    private void showProgressBar(boolean show) {
+        if (show) {
             progressBarHolder.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
-            buttonDate.setVisibility(View.GONE);
-        }else{
+        } else {
             progressBarHolder.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-            buttonDate.setVisibility(View.VISIBLE);
         }
     }
 
     private void setRecyclerViewData() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new MeetupAdapter(meetups));
+        recyclerView.setAdapter(new InscriptionAdapter(inscriptions));
+        if(inscriptions.isEmpty()){
+            recyclerView.setVisibility(View.GONE);
+            subscriptionTextView.setVisibility(View.VISIBLE);
+        }else{
+            recyclerView.setVisibility(View.VISIBLE);
+            subscriptionTextView.setVisibility(View.GONE);
+        }
     }
 
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        String date = dayOfMonth + "/" + month + "/" + year;
-        buttonDate.setText(date);
-    }
-
-    private void setCurrentDate() {
-        String date = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "/" + Calendar.getInstance().get(Calendar.MONTH) + "/" + Calendar.getInstance().get(Calendar.YEAR);
-        buttonDate.setText("Selecionar data");
-
-    }
-
-    private void showDatePickerDialog() {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                getActivity(),
-                this,
-                Calendar.getInstance().get(Calendar.YEAR),
-                Calendar.getInstance().get(Calendar.MONTH),
-                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-        );
-        datePickerDialog.show();
-    }
 
 }

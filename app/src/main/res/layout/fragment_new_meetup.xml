@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:scrollbars="none"
-    tools:context=".view.fragment.InscriptionsFragment">
+    tools:context=".view.fragment.SubscriptionsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -60,7 +60,6 @@
             android:background="@drawable/background_edittext"
             android:ems="10"
             android:hint="@string/text_date"
-            android:inputType="date"
             android:padding="15dp"
             android:textColor="#FFF"
             android:textColorHint="#99FFFFFF"

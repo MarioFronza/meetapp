@@ -129,7 +129,7 @@ public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDa
 
                         @Override
                         public void onFailure(Call<Image> call, Throwable t) {
-                            t.printStackTrace();
+                            Toast.makeText(getActivity(), "Erro na requisição", Toast.LENGTH_LONG).show();
                             visibilityProgress(false);
                         }
                     });

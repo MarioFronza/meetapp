@@ -63,7 +63,7 @@ public class InscriptionAdapter extends RecyclerView.Adapter<InscriptionAdapter.
 
     @Override
     public int getItemCount() {
-        return 1;
+        return inscriptions.size();
     }
 
 
