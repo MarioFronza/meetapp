@@ -32,7 +32,7 @@ public class RetrofitInitializer {
         return retrofit.create(FileService.class);
     }
 
-    public SubscriptionsService getInscriptionService() {
+    public SubscriptionsService getSubscriptionsService() {
         return retrofit.create(SubscriptionsService.class);
     }
 

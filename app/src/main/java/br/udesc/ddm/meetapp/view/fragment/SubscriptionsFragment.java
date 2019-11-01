@@ -60,7 +60,7 @@ public class SubscriptionsFragment extends Fragment {
     private void requestAllInscriptions() {
         preferences = this.getActivity().getSharedPreferences("meetappPreferences", MODE_PRIVATE);
         String token = preferences.getString("token", "");
-        Call<List<Meetup>> call = new RetrofitInitializer().getInscriptionService().getSubscriptions("Bearer " + token);
+        Call<List<Meetup>> call = new RetrofitInitializer().getSubscriptionsService().getSubscriptions("Bearer " + token);
 
         call.enqueue(new Callback<List<Meetup>>() {
             @Override
