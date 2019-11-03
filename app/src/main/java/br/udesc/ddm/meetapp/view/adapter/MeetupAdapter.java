@@ -2,11 +2,13 @@ package br.udesc.ddm.meetapp.view.adapter;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +19,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import br.udesc.ddm.meetapp.R;
@@ -47,7 +52,7 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MyViewHold
         private ImageView image;
         private Button button;
         public View view;
-        public Meetup currentMeetup;
+        private Meetup currentMeetup;
 
         public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -61,7 +66,9 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MyViewHold
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    v.getContext().startActivity(new Intent(v.getContext(), DetailsActivity.class));
+                    Intent intent = new Intent(v.getContext(), DetailsActivity.class);
+                    intent.putExtra("meetup", currentMeetup);
+                    v.getContext().startActivity(intent);
                 }
             });
 
@@ -79,10 +86,10 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.currentMeetup = meetups.get(position);
-        final Meetup meetup = meetups.get(position);
+        Meetup meetup = meetups.get(position);
         holder.title.setText(meetup.getTitle());
         holder.location.setText(meetup.getLocation());
-        holder.date.setText(meetup.getDate());
+        holder.date.setText(formatDate(meetup.getDate()));
         holder.user.setText(meetup.getUser().getName());
         new DownloadImageTask(holder.image).execute(meetups.get(position).getImage().getUrl());
         holder.button.setText(R.string.text_meetup_registration);
@@ -118,6 +125,17 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MyViewHold
             }
         });
 
+    }
+
+    private String formatDate(String dateString) {
+        try {
+            SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+            Date d = sd.parse(dateString);
+            sd = new SimpleDateFormat("dd/MM/yyyy");
+            return sd.format(d);
+        } catch (ParseException e) {
+        }
+        return "";
     }
 
     @Override

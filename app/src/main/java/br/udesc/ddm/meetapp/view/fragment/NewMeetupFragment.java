@@ -253,11 +253,11 @@ public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDa
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        String formatedDatePicker = dayOfMonth + "/" + month + "/" + year;
+        String formatedDatePicker = dayOfMonth + "/" + (month+1)  + "/" + year;
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, dayOfMonth);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
         String formatedDate = sdf.format(calendar.getTime());
         Date date = null;
         try {

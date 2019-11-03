@@ -20,7 +20,6 @@
 
         <activity
             android:name=".view.activity.DetailsActivity"
-            android:parentActivityName=".view.activity.MainActivity"
             tools:targetApi="jelly_bean" />
         <activity android:name=".view.activity.SignupActivity" />
         <activity android:name=".view.activity.SigninActivity" />

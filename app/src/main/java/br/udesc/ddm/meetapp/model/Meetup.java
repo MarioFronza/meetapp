@@ -3,9 +3,11 @@ package br.udesc.ddm.meetapp.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Meetup {
+public class Meetup implements Serializable {
 
     @SerializedName("id")
     private int id;
@@ -23,6 +25,16 @@ public class Meetup {
     private User user;
 
     public Meetup() {
+    }
+
+    public Meetup(int id, String description, String title, String location, String date, Image image, User user) {
+        this.id = id;
+        this.description = description;
+        this.title = title;
+        this.location = location;
+        this.date = date;
+        this.image = image;
+        this.user = user;
     }
 
     public int getId() {
@@ -93,6 +105,8 @@ public class Meetup {
                 ", user=" + user +
                 '}';
     }
+
+
 }
 
 

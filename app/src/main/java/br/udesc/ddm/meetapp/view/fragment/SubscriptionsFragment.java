@@ -23,6 +23,7 @@ import java.util.List;
 
 import br.udesc.ddm.meetapp.R;
 import br.udesc.ddm.meetapp.model.Meetup;
+import br.udesc.ddm.meetapp.model.Subscription;
 import br.udesc.ddm.meetapp.retrofit.RetrofitInitializer;
 import br.udesc.ddm.meetapp.view.adapter.InscriptionAdapter;
 import retrofit2.Call;
@@ -40,7 +41,7 @@ public class SubscriptionsFragment extends Fragment {
     private FrameLayout progressBarHolder;
     private TextView subscriptionTextView;
     private RecyclerView recyclerView;
-    private List<Meetup> inscriptions;
+    private List<Subscription> subscriptions;
 
 
     @Override
@@ -60,13 +61,13 @@ public class SubscriptionsFragment extends Fragment {
     private void requestAllInscriptions() {
         preferences = this.getActivity().getSharedPreferences("meetappPreferences", MODE_PRIVATE);
         String token = preferences.getString("token", "");
-        Call<List<Meetup>> call = new RetrofitInitializer().getSubscriptionsService().getSubscriptions("Bearer " + token);
+        Call<List<Subscription>> call = new RetrofitInitializer().getSubscriptionsService().getSubscriptions("Bearer " + token);
 
-        call.enqueue(new Callback<List<Meetup>>() {
+        call.enqueue(new Callback<List<Subscription>>() {
             @Override
-            public void onResponse(Call<List<Meetup>> call, Response<List<Meetup>> response) {
+            public void onResponse(Call<List<Subscription>> call, Response<List<Subscription>> response) {
                 if (response.isSuccessful()) {
-                    inscriptions = response.body();
+                    subscriptions = response.body();
                     setRecyclerViewData();
                     showProgressBar(false);
                 } else {
@@ -80,7 +81,7 @@ public class SubscriptionsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Meetup>> call, Throwable t) {
+            public void onFailure(Call<List<Subscription>> call, Throwable t) {
                 Toast.makeText(getActivity(), "Erro na requisição", Toast.LENGTH_LONG).show();
                 showProgressBar(false);
             }
@@ -109,11 +110,11 @@ public class SubscriptionsFragment extends Fragment {
 
     private void setRecyclerViewData() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new InscriptionAdapter(inscriptions));
-        if(inscriptions.isEmpty()){
+        recyclerView.setAdapter(new InscriptionAdapter(subscriptions));
+        if (subscriptions.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
             subscriptionTextView.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             recyclerView.setVisibility(View.VISIBLE);
             subscriptionTextView.setVisibility(View.GONE);
         }
