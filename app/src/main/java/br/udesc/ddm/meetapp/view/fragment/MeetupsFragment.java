@@ -104,14 +104,16 @@ public class MeetupsFragment extends Fragment implements DatePickerDialog.OnDate
                         e.printStackTrace();
                     }
                 }
+                showProgressBar(false);
             }
 
             @Override
             public void onFailure(Call<List<Meetup>> call, Throwable t) {
                 Toast.makeText(getActivity(), "Erro na requisição", Toast.LENGTH_LONG).show();
+                showProgressBar(false);
             }
         });
-        showProgressBar(false);
+
     }
 
     private void toastErrorMessage(String error) {
@@ -150,7 +152,7 @@ public class MeetupsFragment extends Fragment implements DatePickerDialog.OnDate
         DateFormat formatter;
 
         formatter = new SimpleDateFormat("dd-MM-yyyy");
-        
+
         try {
             Date newDate = formatter.parse(strDate);
             queryDate = Long.toString(newDate.getTime());

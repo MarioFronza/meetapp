@@ -69,21 +69,22 @@ public class SigninActivity extends AppCompatActivity {
                     try {
                         jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(SigninActivity.this, jObjError.getString("error"), Toast.LENGTH_LONG).show();
-                        visibilityProgressSigin(false);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    visibilityProgressSigin(false);
                 }
             }
 
             @Override
             public void onFailure(Call<Session> call, Throwable t) {
-                Log.i("Retrofit", t.getMessage());
+                Toast.makeText(SigninActivity.this, "Erro na requisição", Toast.LENGTH_LONG).show();
                 visibilityProgressSigin(false);
             }
         });
+
     }
 
     public void goToSiginUp(View view) {

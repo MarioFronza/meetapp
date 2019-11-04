@@ -4,11 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,6 +28,7 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView textViewDescription;
     private TextView textViewLocation;
     private TextView textViewDate;
+    private TextView textViewUser;
     private ImageView imageView;
 
     @Override
@@ -39,6 +44,7 @@ public class DetailsActivity extends AppCompatActivity {
         textViewDescription = findViewById(R.id.textViewDetailsDescriptio);
         textViewLocation = findViewById(R.id.textViewDetailsLocation);
         textViewDate = findViewById(R.id.textViewDetailsDate);
+        textViewUser = findViewById(R.id.textViewDetailsUser);
         imageView = findViewById(R.id.imageDetailsMeetup);
 
         Meetup meetup = (Meetup) getIntent().getSerializableExtra("meetup");
@@ -47,7 +53,8 @@ public class DetailsActivity extends AppCompatActivity {
         textViewDescription.setText(meetup.getDescription());
         textViewLocation.setText(meetup.getLocation());
         textViewDate.setText(formatDate(meetup.getDate()));
-        new DownloadImageTask(imageView).execute(meetup.getImage().getUrl());
+        textViewUser.setText("Organizador: " + meetup.getUser().getName());
+        Picasso.get().load(meetup.getImage().getUrl()).into(imageView);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

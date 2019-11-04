@@ -2,18 +2,18 @@ package br.udesc.ddm.meetapp.view.adapter;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +27,6 @@ import java.util.List;
 import br.udesc.ddm.meetapp.R;
 import br.udesc.ddm.meetapp.model.Meetup;
 import br.udesc.ddm.meetapp.retrofit.RetrofitInitializer;
-import br.udesc.ddm.meetapp.util.DownloadImageTask;
 import br.udesc.ddm.meetapp.view.activity.DetailsActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -91,7 +90,7 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MyViewHold
         holder.location.setText(meetup.getLocation());
         holder.date.setText(formatDate(meetup.getDate()));
         holder.user.setText(meetup.getUser().getName());
-        new DownloadImageTask(holder.image).execute(meetups.get(position).getImage().getUrl());
+        Picasso.get().load(meetups.get(position).getImage().getUrl()).into(holder.image);
         holder.button.setText(R.string.text_meetup_registration);
 
         holder.button.setOnClickListener(new View.OnClickListener() {

@@ -70,18 +70,18 @@ public class SignupActivity extends AppCompatActivity {
                     try {
                         jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(SignupActivity.this, jObjError.getString("error"), Toast.LENGTH_LONG).show();
-                        visibilityProgressSigup(false);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    visibilityProgressSigup(false);
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Log.i("Retrofit", t.getMessage());
+                Toast.makeText(SignupActivity.this, "Erro na requisição", Toast.LENGTH_LONG).show();
                 visibilityProgressSigup(false);
             }
         });
