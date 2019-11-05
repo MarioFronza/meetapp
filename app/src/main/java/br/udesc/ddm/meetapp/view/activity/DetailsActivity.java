@@ -54,7 +54,7 @@ public class DetailsActivity extends AppCompatActivity {
         textViewLocation.setText(meetup.getLocation());
         textViewDate.setText(formatDate(meetup.getDate()));
         textViewUser.setText("Organizador: " + meetup.getUser().getName());
-        Picasso.get().load(meetup.getImage().getUrl()).into(imageView);
+        new DownloadImageTask(imageView).execute(meetup.getImage().getUrl());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

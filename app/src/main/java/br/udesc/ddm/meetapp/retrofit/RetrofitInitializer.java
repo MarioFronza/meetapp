@@ -10,9 +10,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInitializer {
     private final Retrofit retrofit;
-//
+
 //    public RetrofitInitializer() {
-//       retrofit = new Retrofit.Builder().baseUrl("https://ddm-meetapp-server.herokuapp.com")
+//        retrofit = new Retrofit.Builder().baseUrl("https://ddm-meetapp-server.herokuapp.com")
 //                .addConverterFactory(GsonConverterFactory.create()).build();
 //    }
 

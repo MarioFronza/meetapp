@@ -34,6 +34,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import br.udesc.ddm.meetapp.R;
 import br.udesc.ddm.meetapp.model.Image;
@@ -139,7 +140,7 @@ public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDa
         return view;
     }
 
-    private void toastErrorMessage(String error){
+    private void toastErrorMessage(String error) {
         JSONObject jObjError;
         try {
             jObjError = new JSONObject(error);
@@ -253,20 +254,23 @@ public class NewMeetupFragment extends Fragment implements DatePickerDialog.OnDa
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        String formatedDatePicker = dayOfMonth + "/" + (month+1)  + "/" + year;
-
+        String formatedDatePicker = dayOfMonth + "/" + (month + 1) + "/" + year;
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, dayOfMonth);
-        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
-        String formatedDate = sdf.format(calendar.getTime());
-        Date date = null;
         try {
-            date = sdf.parse(formatedDate);
+            selectedDate = convertStringDate(formatedDatePicker);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        selectedDate = date.toString();
         textViewDate.setText(formatedDatePicker);
+    }
+
+    public String convertStringDate(String stringData) throws ParseException {
+        SimpleDateFormat simpleDateForma2 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        Date receivedDate = simpleDateForma2.parse(stringData);
+
+        String formatedDate = android.text.format.DateFormat.format("yyyy-MM-dd hh:mm:ss", receivedDate).toString();
+        return formatedDate;
     }
 
     private void visibilityProgress(boolean show) {

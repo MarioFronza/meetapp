@@ -27,6 +27,7 @@ import java.util.List;
 import br.udesc.ddm.meetapp.R;
 import br.udesc.ddm.meetapp.model.Meetup;
 import br.udesc.ddm.meetapp.retrofit.RetrofitInitializer;
+import br.udesc.ddm.meetapp.util.DownloadImageTask;
 import br.udesc.ddm.meetapp.view.activity.DetailsActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -85,12 +86,12 @@ public class MeetupAdapter extends RecyclerView.Adapter<MeetupAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.currentMeetup = meetups.get(position);
-        Meetup meetup = meetups.get(position);
+        final Meetup meetup = meetups.get(position);
         holder.title.setText(meetup.getTitle());
         holder.location.setText(meetup.getLocation());
         holder.date.setText(formatDate(meetup.getDate()));
         holder.user.setText(meetup.getUser().getName());
-        Picasso.get().load(meetups.get(position).getImage().getUrl()).into(holder.image);
+        new DownloadImageTask(holder.image).execute(meetups.get(position).getImage().getUrl());
         holder.button.setText(R.string.text_meetup_registration);
 
         holder.button.setOnClickListener(new View.OnClickListener() {

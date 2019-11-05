@@ -7,7 +7,6 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.InputStream;
-import java.net.URL;
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
@@ -21,12 +20,13 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         String urldisplay = urls[0];
         Bitmap mIcon11 = null;
         try {
-            InputStream in = new URL(urldisplay).openStream();
+            InputStream in = new java.net.URL(urldisplay).openStream();
             mIcon11 = BitmapFactory.decodeStream(in);
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
+
         return mIcon11;
     }
 

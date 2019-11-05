@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import br.udesc.ddm.meetapp.R;
 import br.udesc.ddm.meetapp.model.Meetup;
@@ -84,7 +85,7 @@ public class MeetupsFragment extends Fragment implements DatePickerDialog.OnDate
         String token = preferences.getString("token", "");
         Call<List<Meetup>> call;
         if (withDate) {
-            Toast.makeText(getActivity(), queryDate, Toast.LENGTH_LONG).show();
+
             call = new RetrofitInitializer().getMeetupService().getMeetupsWithDate("Bearer " + token, queryDate);
         } else {
             call = new RetrofitInitializer().getMeetupService().getMeetups("Bearer " + token);
@@ -147,20 +148,23 @@ public class MeetupsFragment extends Fragment implements DatePickerDialog.OnDate
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         String date = dayOfMonth + "/" + (month + 1) + "/" + year;
-        String strDate = dayOfMonth + "-" + (month + 1) + "-" + year;
-
-        DateFormat formatter;
-
-        formatter = new SimpleDateFormat("dd-MM-yyyy");
 
         try {
-            Date newDate = formatter.parse(strDate);
-            queryDate = Long.toString(newDate.getTime());
+            queryDate = convertStringDate(date);
             buttonDate.setText(date);
             requestsAllMeetups(true);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public String convertStringDate(String stringData) throws ParseException {
+        SimpleDateFormat simpleDateForma2 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        Date receivedDate = simpleDateForma2.parse(stringData);
+
+        String formatedDate = android.text.format.DateFormat.format("yyyy-MM-dd hh:mm:ss", receivedDate).toString();
+        return formatedDate;
     }
 
     private void setCurrentDate() {

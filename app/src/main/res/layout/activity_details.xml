@@ -11,90 +11,118 @@
         android:id="@+id/include"
         layout="@layout/toolbar" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:context=".view.activity.DetailsActivity" >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
-        <ScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/imageDetailsMeetup"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDetailsTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/meetup"
+                tools:ignore="MissingConstraints"
+                tools:srcCompat="@drawable/meetup" />
+
+            <TextView
+                android:id="@+id/textViewDetailsTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Meetup de React Native"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDetailsDescriptio"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageDetailsMeetup"
+                tools:ignore="MissingConstraints" />
 
+            <TextView
+                android:id="@+id/textViewDetailsDescriptio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. "
+                android:textAlignment="inherit"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDetailsLocation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDetailsTitle"
+                tools:ignore="MissingConstraints" />
 
-                <ImageView
-                    android:id="@+id/imageDetailsMeetup"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/meetup" />
+            <TextView
+                android:id="@+id/textViewDetailsLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Rua Dr. Getúlio Vargas, 2000"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDetailsDate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDetailsDescriptio"
+                tools:ignore="MissingConstraints" />
 
-                <TextView
-                    android:id="@+id/textViewDetailsTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Meetup de React Native"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textViewDetailsDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="02 de Setembro, às 20h"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDetailsUser"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDetailsLocation"
+                tools:ignore="MissingConstraints" />
 
-                <TextView
-                    android:id="@+id/textViewDetailsDescriptio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="16dp"
-                    android:textAlignment="inherit"
-                    android:text="Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. "
-                    android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/textViewDetailsUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Organizador: João Pedro Schmitz"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toTopOf="@+id/imageDetailsMeetup"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDetailsDate"
+                tools:ignore="MissingConstraints" />
 
-                <TextView
-                    android:id="@+id/textViewDetailsDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="10dp"
-                    android:text="02 de Setembro, às 20h"
-                    android:textColor="@android:color/white" />
-
-                <TextView
-                    android:id="@+id/textViewDetailsLocation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Rua Dr. Getúlio Vargas, 2000"
-                    android:textColor="@android:color/white" />
-
-                <TextView
-                    android:id="@+id/textViewDetailsUser"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Organizador: João Pedro Schmitz"
-                    android:textColor="@android:color/white" />
-
-            </LinearLayout>
-        </ScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 
 </LinearLayout>
